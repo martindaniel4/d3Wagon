@@ -7,44 +7,28 @@
 
 <style>
 
-	circle.dot {
-  fill: steelblue;
-}
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
 </style>
 
 </head>
 
 <body>
 
-<div id="containerScatterplot"> </div>
-
 <script type="text/javascript">
 
 // Data
 
 var data = [
-  {x: 10.0, y: 9.14},
-  {x:  8.0, y: 8.14},
-  {x: 13.0, y: 8.74},
-  {x:  9.0, y: 8.77},
-  {x: 11.0, y: 9.26},
-  {x: 14.0, y: 8.10},
-  {x:  6.0, y: 6.13},
-  {x:  4.0, y: 3.10},
-  {x: 12.0, y: 9.13},
-  {x:  7.0, y: 7.26},
-  {x:  5.0, y: 4.74},
+  {x: 10.0, y: 9.14, type: "A"},
+  {x:  8.0, y: 8.14, type: "B"},
+  {x: 13.0, y: 8.74, type: "C"},
+  {x:  9.0, y: 8.77, type: "A"},
+  {x: 11.0, y: 9.26, type: "A"},
+  {x: 14.0, y: 8.10, type: "C"},
+  {x:  6.0, y: 6.13, type: "C"},
+  {x:  4.0, y: 3.10, type: "A"},
+  {x: 12.0, y: 9.13, type: "D"},
+  {x:  7.0, y: 7.26, type: "A"},
+  {x:  5.0, y: 4.74, type: "D"},
 ];
 
 // On déclare ici les variables utiles 
@@ -63,24 +47,13 @@ var y = d3.scale.linear()
     .domain([0,9.26])
     .range([height - margin.top - margin.bottom,0]);
 
-// Déclaration des fonctions des axes
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom")
-    .tickPadding(8);
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .tickPadding(8);
+var color = d3.scale.category10();
 
 // Création d'un container
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("class", "dot chart")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -89,22 +62,10 @@ var svg = d3.select("body").append("svg")
 svg.selectAll(".dot") 
     .data(data)
   .enter().append("circle")
-    .attr("class", "dot")
-    .attr("cx", function(d) { return x(d.x); })
-    .attr("cy", function(d) { return y(d.y); })
+    .attr("cx", function(d, i) { console.log(i); return x(d.x); })
+    .attr("cy", function(d) {return y(d.y); })
+    .attr("fill","steelblue")
     .attr("r", 12);
-
-// Ajout des axes
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + y.range()[0] + ")")
-    .call(xAxis);
-
-svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis);
-
 
 </script>
 
