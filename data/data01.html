@@ -62,7 +62,7 @@ var svg = d3.select("body").append("svg")
 svg.selectAll(".dot") 
     .data(data)
   .enter().append("circle")
-    .attr("cx", function(d, i) { console.log(i); return x(d.x); })
+    .attr("cx", function(d, i) { return x(d.x); })
     .attr("cy", function(d) {return y(d.y); })
     .attr("fill","steelblue")
     .attr("r", 12);
