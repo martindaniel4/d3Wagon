@@ -15,10 +15,10 @@ Si vous êtes sous Windows, vous pouvez trouver la version 2.7 à cette adresse 
 
 	Un éditeur de texte
 
-Le Wagon vous recommande notamment Sublime pour PC ou TextMate pour Mac.
+Le Wagon vous recommande notamment Sublime (http://www.sublimetext.com/) pour PC ou TextMate (http://macromates.com/) pour Mac.
 
 	Google Chrome
 
-Nous allons utiliser les outils de développement intégrés au navigateur Google Chrome.
+Nous allons utiliser les outils de développement intégrés au navigateur Google Chrome (http://www.google.fr/intl/fr/chrome/browser/)
 
 Yallah !
