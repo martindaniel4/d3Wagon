@@ -27,6 +27,9 @@ circle.dot {
 
 <body>
 
+  <button> Privé </button>
+  <button> Public </button>
+
 	<script type="text/javascript">
 
 // variables utiles 
@@ -44,7 +47,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("sets/lyceeFR.csv",function(csv) {
+d3.csv("data/lyceeFR.csv",function(csv) {
 
 var data =[];
 
