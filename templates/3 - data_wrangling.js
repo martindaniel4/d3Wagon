@@ -16,3 +16,17 @@ index: i
 
 })
 });
+
+// Récupérer le maximum d'un tableau d'objet
+
+d3.max(data,function(d, i) {return parseFloat(d.value);});
+
+// Nester un tableau 
+
+d3.nest().key(function(d) {return d.type;}).map(data);
+
+// Nester un tableau et lui appliquer une fonction à chaque noeud, par exemple une moyenne
+
+d3.nest().key(function(d) {return d.type;})
+		 .rollup(function(e) {d3.mean(e, function(f) {f.value;})})
+		 .map(data);
