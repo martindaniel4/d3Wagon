@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+
+	<script type="text/javascript" src="../src/d3.js"></script>
+
+<style>
+
+rect {stroke:black;fill:white;}	
+
+line {stroke:#ccc;}
+
+text {font-family: sans-serif; font-size: 10px;}
+
+h1 {font-family: sans-serif; }
+
+
+</style>
+
+</head>
+
+<body>
+
+<h1> All together now ! </h1>
+
+	<script type="text/javascript">
+
+// variables utiles 
+
+var margin = {top: 40, right: 40, bottom: 40, left: 40},
+	square = {width: 110, height: 110, margin: 15}
+    width = 1060,
+    height = 500;
+
+// Container
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("class", "dot chart")
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("../data/sets/lyceeFR.csv",function(csv) {
+
+// Data wrangling
+
+ var data=d3.nest()
+    .key(function(d) {return d.ville;})
+    .sortKeys(d3.ascending)  
+    .entries(csv);
+
+//On calcule ici la moyenne en utilisant un nest, puis en appliquant une moyenne à chaque noeud. On 
+
+ var Avg=d3.nest()
+    .key(function(d) {return d.ville;}) 
+    .rollup(function(d) {return {effectif:d3.mean(d,function(g) {return +g.effectif;}),success:d3.mean(d,function(g) {return +g.success})};})
+    .map(csv);
+
+console.log(Avg["MARSEILLE"]);
+
+// Scales 
+
+var x=d3.scale.linear().domain(d3.extent(csv, function(d) { return parseFloat(d.effectif); })).range([square.margin,square.width-square.margin]);
+var y=d3.scale.linear().domain(d3.extent(csv, function(d) { return parseFloat(d.success); })).range([square.height-square.margin,square.margin]);
+var color = d3.scale.category20();
+
+
+// On créé ici un g par ville
+
+ var g=svg.selectAll("g").data(data).enter()
+    .append("g")
+    .attr("transform",function(d,i) {return "translate("+((i%9)*square.width)+","+(Math.floor(i/9)*square.height)+")";});
+
+   g.append("rect")
+    .attr("x",square.margin/2)
+    .attr("y",square.margin/2)
+    .attr("width",square.width-square.margin)
+    .attr("height",square.height-square.margin)
+      .append("title")
+      .text(function(d) {return d.key;})
+
+  g.append("text")
+    .attr("y",square.height+square.margin/3)
+    .attr("x",square.margin)
+    .text(function(d) {return d.key;})
+
+// On associe pour chaque ville l'ensemble des lycées
+
+  g.selectAll("circle")
+  	.data(function(d) {return d.values;})
+  .enter().append("svg:circle")
+  	.attr("cx",function(d) {return x(parseFloat(d.effectif));})
+  	.attr("cy",function(d) {return y(parseFloat(d.success));})
+  	.attr("r",3)
+  	.attr("fill",function(d) {return color(d.type);})
+  	.attr("opacity",0.5)
+
+ // add Average lines 
+
+  g.append("line")
+    .attr("x1",square.margin/2)
+    .attr("x2",square.width-square.margin/2)
+    .attr("y1",function(d) {return y(Avg[d.key].success);})
+    .attr("y2",function(d) {return y(Avg[d.key].success);})
+    .append("title").text(function(d) {return "Avg. success rate:"+Avg[d.key].success.toFixed(1);});
+
+  g.append("line")
+    .attr("y1",square.margin/2)
+    .attr("y2",square.height-square.margin/2)
+    .attr("x1",function(d) {return x(Avg[d.key].effectif);})
+    .attr("x2",function(d) {return x(Avg[d.key].effectif);})
+    .append("title").text(function(d) {return "Avg. effectif:"+Avg[d.key].effectif.toFixed(1);});
+
+
+});
+
+	</script>
+
+</body>
