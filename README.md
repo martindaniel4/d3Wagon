@@ -1,7 +1,7 @@
 d3Wagon
 =======
 
-Repository pour une session d'introduction aux concepts clés de d3.js.
+Session d'introduction aux concepts clés de d3.js.
 
 Pour suivre cette session nous vous conseillons d'avoir la configuration technique suivante :
 
