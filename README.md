@@ -11,7 +11,7 @@ Nous allons utiliser le serveur local de Python pour pouvoir lire des fichiers e
 
 Python est installé par défaut sur Mac. 
 
-Si vous êtes sous Windows, vous pouvez trouver la version 2.7 à cette adresse : http://www.python.org/getit//. Il vous faudra également ajouter Python à votre variable d'environnement (voir à ce sujet ce blogpost qui détaille comment faire).
+Si vous êtes sous Windows, vous pouvez trouver la version 2.7 à cette adresse : http://www.python.org/getit//. Il vous faudra également ajouter Python à votre variable d'environnement (voir à ce sujet ce tutoriel : http://sametmax.com/ajouter-un-chemin-a-la-variable-denvironnement-path-sous-windows/).
 
 	Un éditeur de texte
 
