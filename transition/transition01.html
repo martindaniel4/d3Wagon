@@ -27,8 +27,7 @@ circle.dot {
 
 <body>
 
-  <button> Privé </button>
-  <button> Public </button>
+  <button id="clickMe"> Button </button>
 
 	<script type="text/javascript">
 
@@ -47,7 +46,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("data/lyceeFR.csv",function(csv) {
+d3.csv("../data/sets/lyceeFR.csv",function(csv) {
 
 var data =[];
 
@@ -59,6 +58,7 @@ x : parseFloat(d.effectif),
 y: parseFloat(d.success),
 name: d.lycee,
 type: d.type,
+ville: d.ville,
 index: i
 
 })
@@ -73,6 +73,10 @@ var x = d3.scale.linear()
 var y = d3.scale.linear()
     .domain(d3.extent(data, function(d) { return d.y; }))
     .range([height - margin.top - margin.bottom, 0]);
+
+var r = d3.scale.linear()
+    .domain(d3.extent(data, function(d) { return d.x; }))
+    .range([2,15]);
 
 var color = d3.scale.category10();
 
@@ -109,8 +113,11 @@ svg.selectAll(".dot")
 	.attr("fill",function(d) {return color(d.type);})
 	.attr("opacity",0.7)
 
+
+d3.select("#clickMe").on("click",function() {transition();});  
+
 });
 
-	</script>
+</script>
 
 </body>
