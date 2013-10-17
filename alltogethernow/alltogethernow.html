@@ -15,6 +15,9 @@ text {font-family: sans-serif; font-size: 10px;}
 
 h1 {font-family: sans-serif; }
 
+.titre {font-family: sans-serif; font-size: 12px; font-weight: bold;}
+
+.left {margin-left:45px;}
 
 </style>
 
@@ -22,7 +25,22 @@ h1 {font-family: sans-serif; }
 
 <body>
 
-<h1> All together now ! </h1>
+<h1 class="left"> All together now ! </h1>
+
+<table border="0" class="left">
+<tr class="titre">
+  <td >Lycee</td>
+  <td >Ville</td>
+  <td >Effectif</td>
+  <td>Success</td>
+</tr>
+<tr height="30px">
+  <td id="lycee" width="400px"></td>
+  <td id="ville" width="100px"></td>
+  <td id="effectif" width="80px"></td>
+  <td id="success" width="80px"></td>
+</tr>
+</table>
 
 	<script type="text/javascript">
 
@@ -57,8 +75,6 @@ d3.csv("../data/sets/lyceeFR.csv",function(csv) {
     .key(function(d) {return d.ville;}) 
     .rollup(function(d) {return {effectif:d3.mean(d,function(g) {return +g.effectif;}),success:d3.mean(d,function(g) {return +g.success})};})
     .map(csv);
-
-console.log(Avg["MARSEILLE"]);
 
 // Scales 
 
@@ -96,6 +112,8 @@ var color = d3.scale.category20();
   	.attr("r",3)
   	.attr("fill",function(d) {return color(d.type);})
   	.attr("opacity",0.5)
+    .on("mouseover",function(d) {addTitle(this, d);})
+    .on("mouseout",function() {removeTitle(this);})
 
  // add Average lines 
 
@@ -112,6 +130,30 @@ var color = d3.scale.category20();
     .attr("x1",function(d) {return x(Avg[d.key].effectif);})
     .attr("x2",function(d) {return x(Avg[d.key].effectif);})
     .append("title").text(function(d) {return "Avg. effectif:"+Avg[d.key].effectif.toFixed(1);});
+
+
+  // Ajouter le nom du lycée au détail
+
+  function addTitle(e, d) {
+    d3.select(e).attr("r",7).attr("opacity",1); 
+    d3.select("#lycee").append("text").text(d.lycee);
+    d3.select("#ville").append("text").text(d.ville);
+    d3.select("#effectif").append("text").text(d.effectif);
+    d3.select("#success").append("text").text(d.success);
+
+  }
+
+  // Supprimer le nom du lycée 
+
+  function removeTitle(e) {
+
+    d3.select(e).attr("r",3).attr("opacity",0.5);
+    d3.select("#lycee").select("text").remove();
+    d3.select("#ville").select("text").remove();
+    d3.select("#effectif").select("text").remove();
+    d3.select("#success").select("text").remove();
+
+  }
 
 
 });
