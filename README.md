@@ -13,6 +13,11 @@ Python est installé par défaut sur Mac.
 
 Si vous êtes sous Windows, vous pouvez trouver la version 2.7 à cette adresse : http://www.python.org/getit//. Il vous faudra également ajouter Python à votre variable d'environnement (voir à ce sujet ce tutoriel : http://sametmax.com/ajouter-un-chemin-a-la-variable-denvironnement-path-sous-windows/).
 
+Pour lancer le serveur web installé par défaut sur python 2.7, utilisez la commande :
+
+```python -m SimpleHTTPServer 8888 ```
+
+
 	Un éditeur de texte
 
 Le Wagon vous recommande notamment Sublime (http://www.sublimetext.com/) pour PC ou TextMate (http://macromates.com/) pour Mac.
